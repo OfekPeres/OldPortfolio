@@ -33,6 +33,7 @@ const HomePage = () => {
       <Body>
         <h1>Welcome to My Website!</h1>
       </Body>
+      <div style={{ height: "50em" }}></div>
     </>
   )
 }
