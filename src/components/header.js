@@ -39,6 +39,9 @@ const StyledLink = styled.li`
 const Header = ({ navBarVisible, currentPage }) => (
   <HeaderStyle navBarVisible={navBarVisible}>
     <StyledLink isSelected={currentPage === "home"}>
+      <Link to="/">Ofek's Portfolio Website</Link>
+    </StyledLink>
+    <StyledLink isSelected={currentPage === "home"}>
       <Link to="/">Home</Link>
     </StyledLink>
     <StyledLink isSelected={currentPage === "about"}>
@@ -48,3 +51,4 @@ const Header = ({ navBarVisible, currentPage }) => (
 )
 
 export default Header
+export { StyledLink }

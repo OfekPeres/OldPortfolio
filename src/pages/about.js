@@ -189,8 +189,8 @@ const About = () => {
             Integer auctor euismod felis et varius. Morbi ac blandit nisi. In
             efficitur nec mi nec tempus. Nam viverra cursus erat. Maecenas
             faucibus efficitur orci vitae pellentesque. Integer gravida non quam
-            vel suscipit. Donec elementum erat ut placerat venenatis.{" "}
-          </MainContent>{" "}
+            vel suscipit. Donec elementum erat ut placerat venenatis.
+          </MainContent>
           <MainContent>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
             venenatis tristique nibh ac aliquet. Integer finibus cursus
