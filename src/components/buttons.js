@@ -1,11 +1,10 @@
 import styled from "styled-components"
 import React from "react"
 const StyledHamburgerButtonContainer = styled.div`
-  
   width: 50px;
   height: 50px;
   /* display: flex; */
-  display: ${({ smallScreen }) => (smallScreen ? "flex" : "none")}
+  display: ${({ smallScreen }) => (smallScreen ? "flex" : "none")};
   position: absolute;
   right: 30px;
   bottom: 30px;

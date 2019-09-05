@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { Link as ScrollLink } from "react-scroll"
 // General Container to hold all content
 const Container = styled.div`
@@ -24,7 +24,6 @@ const ContainerFoundation = styled.div`
   -ms-overflow-style: none;
   flex-direction: column;
   display: flex;
-  min-height: 300px;
 `
 // Container to hold content for the sidebar
 const SideBarContainer = styled(ContainerFoundation)`
@@ -33,23 +32,37 @@ const SideBarContainer = styled(ContainerFoundation)`
   }
   flex: 2;
   display: flex;
-min-height: 300px;
-  display: ${({ visible }) => (visible ? "flex" : "none")};
-  display: ${({ toggleSideBar, visible }) =>
-    toggleSideBar || visible ? "flex" : "none"};
 
 
-  /* height: ${({ visible }) => (visible ? "auto" : "0")};
-  width: ${({ visible }) => (visible ? "auto" : "0")};
-  opacity: ${({ visible }) => (visible ? "1" : "0")};
-  transition: ${({ visible }) =>
-    visible
-      ? "height 1s, width 1s,  opacity 1s"
-      : "height 1s, width 1s, opacity 1s"}; */
-  /* transition: display 0s ease 2s; */
+  /* Hide SideBar without using Display:none */
+  /* position: absolute;
+   top: -9999px;
+   left: -9999px; */
+   
+   
+/* Hide SideBar using display:none */
+  /* display: ${({ visible }) => (visible ? "flex" : "none")}; */
+
+  
+  /* top:${({ visible }) => (visible ? "" : "-3000px")}; */
+  /* left:${({ visible }) => (visible ? "0px" : "-300px")}; */
+  /* visibility: ${({ visible }) => (visible ? "visible" : "hidden")}; */
+  
+  
+  position: ${({ toggleSideBar }) => (toggleSideBar ? "absolute" : "relative")};
+  left:${({ toggleSideBar, visible }) =>
+    visible || toggleSideBar ? "0px" : "-600px"};
+  width: ${({ toggleSideBar }) => (toggleSideBar ? "100vw" : "")};
+  height: ${({ toggleSideBar }) => (toggleSideBar ? "100vh" : "100vh")};
+  opacity: ${({ toggleSideBar }) => (toggleSideBar ? ".9" : "")};
+
+  position: ${({ visible }) => (visible ? "relative" : "absolute")};
+
+  transition: left .3s, position 0s 2s, opacity 0s , width 0s 2s, height 0s 2s;
+
   min-width: 250px;
   /* background-color: #f7f7f7; */
-  background-color:#373a47;
+  background-color: #373a47;
   justify-content: flex-start;
 `
 const SideBarElement = styled.div`

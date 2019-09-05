@@ -36,7 +36,7 @@ const initialState = {
   prevScrollpos: window.pageYOffset,
   navBarVisible: true,
   currentSelection: "",
-  toggleSideBar: true,
+  toggleSideBar: false,
 }
 
 // const titleToID = {"Welcome To My Website" : }
@@ -82,8 +82,12 @@ const HomePage = () => {
     }
   })
 
+  useEffect(() => {
+    if (!smallScreen && toggleSideBar) {
+      setState({ ...state, toggleSideBar: false })
+    }
+  }, [smallScreen])
   // have an onClick method to pass to button to toggle sidebar
-
   function toggleSideBar() {
     setState({ ...state, toggleSideBar: !state.toggleSideBar })
   }
@@ -107,7 +111,7 @@ const HomePage = () => {
                 containerId="main-content"
                 onClick={() => {
                   const currentSelection = "welcome"
-                  setState({ ...state, currentSelection })
+                  setState({ ...state, currentSelection, toggleSideBar: false })
                 }}
               >
                 Welcome to my website!
@@ -124,7 +128,7 @@ const HomePage = () => {
                 containerId="main-content"
                 onClick={() => {
                   const currentSelection = "motivation"
-                  setState({ ...state, currentSelection })
+                  setState({ ...state, currentSelection, toggleSideBar: false })
                 }}
               >
                 to Motivation
@@ -141,7 +145,7 @@ const HomePage = () => {
                 containerId="main-content"
                 onClick={() => {
                   const currentSelection = "about2"
-                  setState({ ...state, currentSelection })
+                  setState({ ...state, currentSelection, toggleSideBar: false })
                 }}
               >
                 to about 2
@@ -158,7 +162,7 @@ const HomePage = () => {
                 containerId="main-content"
                 onClick={() => {
                   let currentSelection = "about"
-                  setState({ ...state, currentSelection })
+                  setState({ ...state, currentSelection, toggleSideBar: false })
                 }}
               >
                 About Me
