@@ -10,8 +10,8 @@ import {
 
 // import { Link as ScrollLink, animateScroll as scroll } from "react-scroll"
 const ScrollTest = () => {
-  const scrollToTop = () => scroll.scrollToTop()
-  const scrollToBottom = () => scroll.scrollToBottom()
+  // const scrollToTop = () => scroll.scrollToTop()
+  // const scrollToBottom = () => scroll.scrollToBottom()
 
   useEffect(() => {
     Events.scrollEvent.register("begin", function(to, element) {

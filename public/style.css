@@ -1,0 +1,34 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+
+  /* Underline Active Elements in sidebar - active as in focused on page */
+  .element-active-on-screen {
+    border-bottom: 1px solid white;
+    font-weight: bold;
+}
+  /* html, body, .viewport {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  } */
+
+  
+  /* .menu-container {
+    color: #fff;
+    background-color: #5995DA;  
+    padding: 20px 0;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .menu {
+    border: 1px solid #fff;  
+    width: 900px;
+    display: flex;
+    flex-direction: column-reverse;
+  } */

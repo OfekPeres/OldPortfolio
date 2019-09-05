@@ -97,10 +97,10 @@ const Page = () => (
       <Header>
         <SubscribeDiv>Subscribe!</SubscribeDiv>
         <LogoDiv>
-          <img src={awesomeLogo} />
+          <img alt="" src={awesomeLogo} />
         </LogoDiv>
         <SocialDiv>
-          <img src={socialIcon} />
+          <img alt="" src={socialIcon} />
         </SocialDiv>
       </Header>
     </HeaderContainer>
@@ -108,19 +108,19 @@ const Page = () => (
     <PhotoGridContainer>
       <PhotoGrid>
         <PhotoGridItem>
-          <img src={imageOne} />
+          <img alt="" src={imageOne} />
         </PhotoGridItem>
         <PhotoGridItem>
-          <img src={imageTwo} />
+          <img alt="" src={imageTwo} />
         </PhotoGridItem>
         <PhotoGridItem>
-          <img src={imageThree} />
+          <img alt="" src={imageThree} />
         </PhotoGridItem>
         <PhotoGridItem>
-          <img src={imageFour} />
+          <img alt="" src={imageFour} />
         </PhotoGridItem>
         <PhotoGridItem>
-          <img src={imageFive} />
+          <img alt="" src={imageFive} />
         </PhotoGridItem>
       </PhotoGrid>
     </PhotoGridContainer>
