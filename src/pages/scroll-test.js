@@ -3,7 +3,7 @@ import {
   Link,
   // Element,
   Events,
-  animateScroll as scroll,
+  // animateScroll as scroll,
   scrollSpy,
   // scroller,
 } from "react-scroll"

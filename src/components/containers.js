@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 import { Link as ScrollLink } from "react-scroll"
 // General Container to hold all content
 const Container = styled.div`
@@ -58,7 +58,7 @@ const SideBarContainer = styled(ContainerFoundation)`
 
   position: ${({ visible }) => (visible ? "relative" : "absolute")};
 
-  transition: left .3s, position 0s 2s, opacity 0s , width 0s 2s, height 0s 2s;
+  transition: left .3s, position 0s 1.1s, opacity 0s , width 0s 1s, height 0s ;
 
   min-width: 250px;
   /* background-color: #f7f7f7; */

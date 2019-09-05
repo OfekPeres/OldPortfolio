@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import useWindowDimensions from "../functions/useWindowDimensions"
 import Body from "../components/body"
 import Header from "../components/header"
+import GlobalLayout from "../components/global_layout"
 import {
   Events,
   // animateScroll as scroll,
@@ -92,7 +93,7 @@ const HomePage = () => {
     setState({ ...state, toggleSideBar: !state.toggleSideBar })
   }
   return (
-    <>
+    <GlobalLayout>
       <Header navBarVisible={state.navBarVisible} currentPage={"home"} />
       <Body>
         <Container>
@@ -241,7 +242,7 @@ const HomePage = () => {
           </MainContentContainer>
         </Container>
       </Body>
-    </>
+    </GlobalLayout>
   )
 }
 
