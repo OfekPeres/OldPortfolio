@@ -108,7 +108,7 @@ const HomePage = () => {
                 spy={true}
                 smooth={true}
                 duration={500}
-                offset={-70}
+                offset={-75}
                 containerId="main-content"
                 onClick={() => {
                   const currentSelection = "welcome"
@@ -125,7 +125,7 @@ const HomePage = () => {
                 spy={true}
                 smooth={true}
                 duration={500}
-                offset={-70}
+                offset={-75}
                 containerId="main-content"
                 onClick={() => {
                   const currentSelection = "motivation"
@@ -142,7 +142,7 @@ const HomePage = () => {
                 spy={true}
                 smooth={true}
                 duration={500}
-                offset={-70}
+                offset={-75}
                 containerId="main-content"
                 onClick={() => {
                   const currentSelection = "about2"
@@ -159,7 +159,7 @@ const HomePage = () => {
                 spy={true}
                 smooth={true}
                 duration={500}
-                offset={-70}
+                offset={-75}
                 containerId="main-content"
                 onClick={() => {
                   let currentSelection = "about"
