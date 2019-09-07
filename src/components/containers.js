@@ -5,8 +5,11 @@ const Container = styled.div`
   display: flex;
   overflow: hidden;
   height: 100vh;
-  margin-top: -80px;
-  padding-top: 80px;
+
+  /* Adjust for hiding/showing navbar */
+  margin-top: ${({ smallScreen }) => (smallScreen ? "-40px" : "-80px")};
+  padding-top: ${({ smallScreen }) => (smallScreen ? "40px" : "80px")};
+  /* padding-top: 80px; */
   position: relative;
   width: 100%;
   backface-visibility: hidden;

@@ -34,7 +34,7 @@ const StyledLink = styled(Link)`
 // make a function to hold state for when I am scrolling or not, then add a useEffect
 // hook to update the visible/invisible state of the header
 const initialState = {
-  prevScrollpos: window.pageYOffset,
+  prevScrollpos: 0,
   navBarVisible: true,
   currentSelection: "",
   toggleSideBar: false,
@@ -47,25 +47,10 @@ const HomePage = () => {
   // make sure that we know if the screen is big enough to display sidebar
   const smallScreen = width < 560
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const { prevScrollpos } = state
-
-      const currentScrollPos = window.pageYOffset
-      const navBarVisible = prevScrollpos > currentScrollPos
-
-      setState({ ...state, prevScrollpos: currentScrollPos, navBarVisible })
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  })
-
   // const scrollToTop = () => scroll.scrollToTop()
   // const scrollToBottom = () => scroll.scrollToBottom()
 
+  // this effect is to handle scrolling to different links
   useEffect(() => {
     Events.scrollEvent.register("begin", function(to, element) {
       // console.log("begin", arguments)
@@ -83,6 +68,8 @@ const HomePage = () => {
     }
   })
 
+  // when going from a toggle sidebar in a small screen to a big screen, the sidebar merges to the left, but when you drag back
+  // to a small screen, the sidebar was still there, this effect resets the sidebar after resize
   useEffect(() => {
     if (!smallScreen && toggleSideBar) {
       setState({ ...state, toggleSideBar: false })
@@ -94,7 +81,7 @@ const HomePage = () => {
   }
   return (
     <GlobalLayout>
-      <Header navBarVisible={state.navBarVisible} currentPage={"home"} />
+      <Header smallScreen={smallScreen} currentPage={"home"} />
       <Body>
         <Container>
           <SideBarContainer

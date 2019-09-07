@@ -9,23 +9,22 @@ const HeaderStyle = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: #e4decd; */
-  background-color:black;
-  /* font-size: 3rem; */
+  background-color: black;
   font-family: sans-serif;
   z-index: 10;
-  position: relative;
-  height: 80px;
+
+  height: ${({ smallScreen }) => (smallScreen ? "40px" : "80px")};
   margin: 0;
   padding: 0;
   top: 0;
   left: 0;
   right: 0;
   box-shadow: 0 0 10px 0 black;
-  /* top: ${({ navBarVisible }) => (navBarVisible ? "0px" : "-80px")}; */
-  /* opacity: ${({ navBarVisible }) => (navBarVisible ? 1 : 0)}; */
-  /* transition: top 0.6s; */
-  /* transition: opacity 0.5s; */
+  top: "0px";
+  position: "absolute";
+
+  transition: height 1s;
+
   * {
     display: inline;
   }
@@ -72,8 +71,8 @@ const HomeLinkContainer = styled.div`
 
   /* margin-left: 5%; */
 `
-const Header = ({ navBarVisible, currentPage }) => (
-  <HeaderStyle navBarVisible={navBarVisible}>
+const Header = ({ smallScreen, currentPage }) => (
+  <HeaderStyle smallScreen={smallScreen}>
     <HomeLinkContainer>
       <StyledHomeLink>
         <Link to="/">Ofek's Portfolio</Link>
