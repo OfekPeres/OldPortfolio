@@ -11,19 +11,15 @@ const HeaderStyle = styled.header`
   justify-content: center;
   background-color: black;
   font-family: sans-serif;
-  z-index: 10;
+  /* z-index: 10; */
 
   height: ${({ smallScreen }) => (smallScreen ? "40px" : "80px")};
-  margin: 0;
-  padding: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  box-shadow: 0 0 10px 0 black;
-  top: "0px";
-  position: "absolute";
 
-  transition: height 1s;
+  box-shadow: 0 0 10px 0 black;
+
+  position: relative;
+
+  transition: height 0.5s;
 
   * {
     display: inline;
@@ -71,8 +67,8 @@ const HomeLinkContainer = styled.div`
 
   /* margin-left: 5%; */
 `
-const Header = ({ smallScreen, currentPage }) => (
-  <HeaderStyle smallScreen={smallScreen}>
+const Header = ({ smallScreen, currentPage, height }) => (
+  <HeaderStyle smallScreen={smallScreen} height={height}>
     <HomeLinkContainer>
       <StyledHomeLink>
         <Link to="/">Ofek's Portfolio</Link>
@@ -85,13 +81,13 @@ const Header = ({ smallScreen, currentPage }) => (
       <StyledLink isSelected={currentPage === "about"}>
         <Link to="/about">About</Link>
       </StyledLink>
-      <StyledLink>
+      {/* <StyledLink>
         <Link to="/about">
           <SVG src={CertificateLogo} width="30px" alt="">
             <title>Certifications</title>
           </SVG>
         </Link>
-      </StyledLink>
+      </StyledLink> */}
     </LinkGroup>
   </HeaderStyle>
 )

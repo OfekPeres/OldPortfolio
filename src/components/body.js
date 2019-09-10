@@ -15,6 +15,7 @@ const Body = styled.div`
   padding: 0;
   margin: 0;
   color: #ebebeb;
+  /* height: 100vh; */
 `
 
 export default Body

@@ -4,12 +4,13 @@ import { Link as ScrollLink } from "react-scroll"
 const Container = styled.div`
   display: flex;
   overflow: hidden;
-  height: 100vh;
-
+  flex: 1;
   /* Adjust for hiding/showing navbar */
   margin-top: ${({ smallScreen }) => (smallScreen ? "-40px" : "-80px")};
   padding-top: ${({ smallScreen }) => (smallScreen ? "40px" : "80px")};
-  /* padding-top: 80px; */
+
+  /* height: calc(100vh); */
+  height: 100vh;
   position: relative;
   width: 100%;
   backface-visibility: hidden;
@@ -21,10 +22,11 @@ const Container = styled.div`
 // Reusable style elements for both the sidebar and main content container
 const ContainerFoundation = styled.div`
   overflow: auto;
-  height: auto;
+  height: 100vh;
   padding: 0.5rem;
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: none;
+  /* -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none; */
+
   flex-direction: column;
   display: flex;
 `
@@ -62,11 +64,20 @@ const SideBarContainer = styled(ContainerFoundation)`
   position: ${({ visible }) => (visible ? "relative" : "absolute")};
 
   transition: left .3s, position 0s 1.1s, opacity 0s , width 0s 1s, height 0s ;
-
+      
   min-width: 250px;
   /* background-color: #f7f7f7; */
   background-color: #373a47;
-  justify-content: flex-start;
+  
+  /* justify-content:${({ smallScreen }) =>
+    smallScreen ? "center" : "flex-start"}; */
+    
+    
+  
+
+  padding-bottom: 40px;
+
+
 `
 const SideBarElement = styled.div`
   display: flex;
@@ -82,6 +93,9 @@ const SideBarElement = styled.div`
   :text {
     cursor: pointer;
   }
+
+  margin-top: ${({ first, smallScreen }) =>
+    smallScreen && first ? "auto" : "0"};
 `
 const StyledScrollLink = styled(ScrollLink)`
   cursor: pointer;

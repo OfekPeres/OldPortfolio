@@ -158,7 +158,7 @@ const About = () => {
   return (
     <Body>
       {/* <Header>Header</Header> */}
-      <Header currentPage="about" navBarVisible={state.navBarVisible} />
+      <Header currentPage="about" />
       <Container>
         <SideBarContainer>
           Left Content (sidebar) asdsa asdsa das dasd

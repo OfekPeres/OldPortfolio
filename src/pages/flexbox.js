@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import ActualHeader from "../components/header"
 const awesomeLogo = require("../images/awesome-logo.svg")
 const socialIcon = require("../images/social-icons.svg")
 const imageOne = require("../images/one.svg")
@@ -80,6 +81,7 @@ const PhotoGridItem = styled.div`
 
 const Page = () => (
   <>
+    <ActualHeader />
     <Body>
       <FlexContainer>
         <MenuDiv>

@@ -43,7 +43,7 @@ const initialState = {
 // const titleToID = {"Welcome To My Website" : }
 const HomePage = () => {
   const [state, setState] = useState(initialState)
-  const { width } = useWindowDimensions()
+  const { width, height } = useWindowDimensions()
   // make sure that we know if the screen is big enough to display sidebar
   const smallScreen = width < 560
 
@@ -83,12 +83,13 @@ const HomePage = () => {
     <GlobalLayout>
       <Header smallScreen={smallScreen} currentPage={"home"} />
       <Body>
-        <Container>
+        <Container smallScreen={smallScreen}>
           <SideBarContainer
             visible={!smallScreen}
+            smallScreen={smallScreen}
             toggleSideBar={state.toggleSideBar}
           >
-            <SideBarElement>
+            <SideBarElement first={true} smallScreen={smallScreen}>
               <StyledScrollLink
                 activeClass="element-active-on-screen"
                 to="welcome"
@@ -156,6 +157,229 @@ const HomePage = () => {
                 About Me
               </StyledScrollLink>
             </SideBarElement>
+            {/* Delete after here */}
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            {/* Delete before here */}
           </SideBarContainer>
           <MainContentContainer id="main-content">
             <HamburgerButton
