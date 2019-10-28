@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { Link as ScrollLink } from "react-scroll"
+import React from "react"
 // General Container to hold all content
 const Container = styled.div`
   display: flex;
@@ -29,11 +30,13 @@ const ContainerFoundation = styled.div`
 
   flex-direction: column;
   display: flex;
+  /* display: -webkit-flexbox; */
+  /* display: -webkit-box; */
 `
 // Container to hold content for the sidebar
 const SideBarContainer = styled(ContainerFoundation)`
   ::-webkit-scrollbar {
-    display: none;
+    width: thin;
   }
   flex: 2;
   display: flex;
@@ -71,7 +74,7 @@ const SideBarContainer = styled(ContainerFoundation)`
   
   /* justify-content:${({ smallScreen }) =>
     smallScreen ? "center" : "flex-start"}; */
-    
+    display: -webkit-flex;
     
   
 
@@ -79,9 +82,9 @@ const SideBarContainer = styled(ContainerFoundation)`
 
 
 `
-const SideBarElement = styled.div`
+const SideBarElementStyle = styled.div`
   display: flex;
-
+  flex-shrink: 0;
   justify-content: center;
 
   padding: 0.8em;
@@ -96,6 +99,8 @@ const SideBarElement = styled.div`
 
   margin-top: ${({ first, smallScreen }) =>
     smallScreen && first ? "auto" : "0"};
+
+  display: -webkit-flex;
 `
 const StyledScrollLink = styled(ScrollLink)`
   cursor: pointer;
@@ -103,6 +108,9 @@ const StyledScrollLink = styled(ScrollLink)`
 // Container to hold all actual text and videos for a given page
 const MainContentContainer = styled(ContainerFoundation)`
   display: flex;
+  /* display: -webkit-flexbox; */
+  flex-direction: column;
+  /* -webkit-flex-direction: column; */
   flex: 15;
   align-items: center;
   /* justify-content: space-around; */
@@ -112,13 +120,42 @@ const MainContentContainer = styled(ContainerFoundation)`
   /* color: #fffce1; */
   font-family: "Raleway", Arial, sans-serif;
 `
-
+const SideBarElement = ({
+  first,
+  smallScreen,
+  to,
+  currentSelection,
+  handleClick,
+  text,
+}) => {
+  return (
+    <SideBarElementStyle first={first} smallScreen={smallScreen}>
+      <StyledScrollLink
+        activeClass="element-active-on-screen"
+        to={to}
+        spy={true}
+        smooth={true}
+        duration={500}
+        offset={-75}
+        containerId="main-content"
+        onClick={() => {
+          handleClick(currentSelection)
+        }}
+      >
+        {text}
+      </StyledScrollLink>
+    </SideBarElementStyle>
+  )
+}
 // Place an item to be displayed in this container
 const MainContentElement = styled.div`
   display: flex;
+  flex-shrink: 0;
+  /* display: -webkit-flexbox; */
+  /* flex: 0 1 auto; */
   /* justify-content: center; */
   align-items: center;
-  padding-bottom: 3%;
+  /* margin-bottom: px; */
   padding-top: 3%;
   padding-left: 7%;
   padding-right: 7%;
@@ -149,6 +186,7 @@ const VideoItem = styled.div`
   /* width: 60%; */
 `
 const PageHeader = styled.h1`
+  text-align: center;
   animation: ${({ isActive }) =>
     isActive ? "pageheader-background-fade 3s forwards" : "none"};
   animation-direction: alternate;
@@ -187,6 +225,16 @@ const Title = styled.h2`
     }
   }
 `
+
+const StyledUrlLink = styled.a`
+  :hover {
+    /* cursor: pointer; */
+    border-bottom: 1px solid darkseagreen;
+  }
+
+  text-decoration: none;
+  color: darkseagreen;
+`
 const Blurb = styled.p``
 export {
   Container,
@@ -202,4 +250,5 @@ export {
   SideBarElement,
   PageHeader,
   StyledScrollLink,
+  StyledUrlLink,
 }

@@ -1,260 +1,460 @@
 import React, { useState, useEffect } from "react"
-import Header from "../components/header"
+import useWindowDimensions from "../functions/useWindowDimensions"
 import Body from "../components/body"
-// import SideBar from "../components/sidebar"
+import Header from "../components/header"
+import GlobalLayout from "../components/global_layout"
+import {
+  Events,
+  // animateScroll as scroll,
+  scrollSpy,
+} from "react-scroll"
+import { HamburgerButton } from "../components/buttons"
+import {
+  Container,
+  SideBarContainer,
+  MainContentContainer,
+  MainContentElement,
+  PageHeader,
+  Title,
+  Blurb,
+  SideBarElement,
+  StyledScrollLink,
+} from "../components/containers"
+import { Link } from "gatsby"
 import styled from "styled-components"
-import ReactPlayer from "react-player"
 
-// const robotTestVid = require("../videos/test.mov")
-
-// All of the below containers should be moved to separate files
-// const PageContainer = styled.div`
-//   display: flex;
-//   overflow: hidden;
-//   height: 100vh;
-//   margin-top: -80px;
-//   padding-top: 80px;
-//   position: relative;
-//   width: 100%;
-//   backface-visibility: hidden;
-//   will-change: overflow;
-// `
-
-const Container = styled.div`
-  display: flex;
-  overflow: hidden;
-  height: 100vh;
-  margin-top: -80px;
-  padding-top: 80px;
-  position: relative;
-  width: 100%;
-  backface-visibility: hidden;
-  will-change: overflow;
-`
-const Columns = styled.div`
-  overflow: auto;
-  height: auto;
-  padding: 0.5rem;
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: none;
-`
-
-const SideBarContainer = styled(Columns)`
-  ::-webkit-scrollbar {
-    display: none;
+const StyledLink = styled(Link)`
+  :hover {
+    cursor: pointer;
   }
-  /* display: flex;
-  justify-content: flex-start;
-  align-content: center;
-  height: 100vh;
-  overflow: auto;
-  margin-top: 80px;
-  margin-bottom: -80px; */
-  width: 80px;
-  background-color: #f7f7f7;
-`
-const MainContentContainer = styled(Columns)`
-  display: flex;
-  flex: 15;
-  align-items: center;
-  /* justify-content: space-around; */
-  flex-direction: column;
-`
-const MainContent = styled.div`
-  display: flex;
-  justify-content: center;
-  padding-bottom: 3%;
-  padding-top: 3%;
-  padding-left: 7%;
-  padding-right: 7%;
-`
-const VideoContainer = styled.div`
-  width: 60%;
-`
-const VideoAspectRatioContainer = styled.div`
-  /* display: flex; */
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 */
-  /* padding-top: 25px; */
-  height: 0;
-  width: 100%;
-`
 
-const VideoItem = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  /* width: 60%; */
+  text-decoration: none;
+  color: black;
 `
-
-// const SideBarPlaceholder = styled.div`
-//   background-color: #09868b;
-//   display: flex;
-//   align-content: space-between;
-//   flex-direction: column;
-//   width: 80px;
-// `
-// const SideBarElement = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   color: white;
-//   font-size: 72px;
-// `
-// All of the above containers should be moved to separate files
+// make a function to hold state for when I am scrolling or not, then add a useEffect
+// hook to update the visible/invisible state of the header
 const initialState = {
-  prevScrollpos: window.pageYOffset,
+  prevScrollpos: 0,
   navBarVisible: true,
+  currentSelection: "",
+  toggleSideBar: false,
 }
 
-const About = () => {
+// const titleToID = {"Welcome To My Website" : }
+const HomePage = () => {
   const [state, setState] = useState(initialState)
+  const { width, height } = useWindowDimensions()
+  // make sure that we know if the screen is big enough to display sidebar
+  const smallScreen = width < 560
 
+  // const scrollToTop = () => scroll.scrollToTop()
+  // const scrollToBottom = () => scroll.scrollToBottom()
+
+  // this effect is to handle scrolling to different links
   useEffect(() => {
-    const handleScroll = () => {
-      const { prevScrollpos } = state
+    Events.scrollEvent.register("begin", function(to, element) {
+      // console.log("begin", arguments)
+    })
 
-      const currentScrollPos = window.pageYOffset
-      const navBarVisible = prevScrollpos > currentScrollPos
+    Events.scrollEvent.register("end", function(to, element) {
+      // console.log("end", arguments)
+    })
 
-      setState({ ...state, prevScrollpos: currentScrollPos, navBarVisible })
-    }
+    scrollSpy.update()
 
-    window.addEventListener("scroll", handleScroll)
     return () => {
-      window.removeEventListener("scroll", handleScroll)
+      Events.scrollEvent.remove("begin")
+      Events.scrollEvent.remove("end")
     }
   })
-  //   return (
-  //     <PageContainer>
-  //       <Header
-  //         headerText="About Ofek"
-  //         currentPage="about"
-  //         navBarVisible={state.navBarVisible}
-  //       />
 
-  //       <SideBarContainer>
-  //         {/* <SideBar navBarVisible={state.navBarVisible} /> */}
-  //         <SideBarPlaceholder>
-  //           <SideBarElement>1</SideBarElement>
-  //           <SideBarElement>2</SideBarElement>
-  //           <SideBarElement>3</SideBarElement>
-  //         </SideBarPlaceholder>
-  //       </SideBarContainer>
-  //       <Container>
-  //         <Body>
-  //           <div style={{ color: `teal` }}>
-  //             <h1>About Gatsby</h1>
-  //             <p>Such wow. Very React.</p>
-  //           </div>
-  //         </Body>
-  //       </Container>
-  //       <div style={{ height: "50em" }}></div>
-  //     </PageContainer>
-  //   )
-
+  // when going from a toggle sidebar in a small screen to a big screen, the sidebar merges to the left, but when you drag back
+  // to a small screen, the sidebar was still there, this effect resets the sidebar after resize
+  useEffect(() => {
+    if (!smallScreen && toggleSideBar) {
+      setState({ ...state, toggleSideBar: false })
+    }
+  }, [smallScreen])
+  // have an onClick method to pass to button to toggle sidebar
+  function toggleSideBar() {
+    setState({ ...state, toggleSideBar: !state.toggleSideBar })
+  }
   return (
-    <Body>
-      {/* <Header>Header</Header> */}
-      <Header currentPage="about" />
-      <Container>
-        <SideBarContainer>
-          Left Content (sidebar) asdsa asdsa das dasd
-          {/* <div style={{ height: "50em" }}></div> */}
-        </SideBarContainer>
-        <MainContentContainer>
-          <VideoContainer>
-            <VideoAspectRatioContainer>
-              <VideoItem>
-                <ReactPlayer
-                  url="https://www.youtube.com/watch?v=rsF0tNkCfSI"
-                  className="react-player"
-                  width="100%"
-                  height="100%"
-                  controls
-                  muted
-                />
-              </VideoItem>
-            </VideoAspectRatioContainer>
-          </VideoContainer>
-          <MainContent>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-            venenatis tristique nibh ac aliquet. Integer finibus cursus
-            pellentesque. Praesent hendrerit mi condimentum faucibus feugiat.
-            Morbi feugiat dui mattis, consectetur nisi ac, molestie felis. Donec
-            tincidunt pulvinar placerat. Phasellus imperdiet, neque id sagittis
-            vulputate, enim ex elementum felis, ut fringilla orci eros id eros.
-            Integer auctor euismod felis et varius. Morbi ac blandit nisi. In
-            efficitur nec mi nec tempus. Nam viverra cursus erat. Maecenas
-            faucibus efficitur orci vitae pellentesque. Integer gravida non quam
-            vel suscipit. Donec elementum erat ut placerat venenatis.
-          </MainContent>
-          <MainContent>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-            venenatis tristique nibh ac aliquet. Integer finibus cursus
-            pellentesque. Praesent hendrerit mi condimentum faucibus feugiat.
-            Morbi feugiat dui mattis, consectetur nisi ac, molestie felis. Donec
-            tincidunt pulvinar placerat. Phasellus imperdiet, neque id sagittis
-            vulputate, enim ex elementum felis, ut fringilla orci eros id eros.
-            Integer auctor euismod felis et varius. Morbi ac blandit nisi. In
-            efficitur nec mi nec tempus. Nam viverra cursus erat. Maecenas
-            faucibus efficitur orci vitae pellentesque. Integer gravida non quam
-            vel suscipit. Donec elementum erat ut placerat venenatis.{" "}
-          </MainContent>{" "}
-          <MainContent>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-            venenatis tristique nibh ac aliquet. Integer finibus cursus
-            pellentesque. Praesent hendrerit mi condimentum faucibus feugiat.
-            Morbi feugiat dui mattis, consectetur nisi ac, molestie felis. Donec
-            tincidunt pulvinar placerat. Phasellus imperdiet, neque id sagittis
-            vulputate, enim ex elementum felis, ut fringilla orci eros id eros.
-            Integer auctor euismod felis et varius. Morbi ac blandit nisi. In
-            efficitur nec mi nec tempus. Nam viverra cursus erat. Maecenas
-            faucibus efficitur orci vitae pellentesque. Integer gravida non quam
-            vel suscipit. Donec elementum erat ut placerat venenatis.{" "}
-          </MainContent>{" "}
-          <MainContent>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-            venenatis tristique nibh ac aliquet. Integer finibus cursus
-            pellentesque. Praesent hendrerit mi condimentum faucibus feugiat.
-            Morbi feugiat dui mattis, consectetur nisi ac, molestie felis. Donec
-            tincidunt pulvinar placerat. Phasellus imperdiet, neque id sagittis
-            vulputate, enim ex elementum felis, ut fringilla orci eros id eros.
-            Integer auctor euismod felis et varius. Morbi ac blandit nisi. In
-            efficitur nec mi nec tempus. Nam viverra cursus erat. Maecenas
-            faucibus efficitur orci vitae pellentesque. Integer gravida non quam
-            vel suscipit. Donec elementum erat ut placerat venenatis.{" "}
-          </MainContent>{" "}
-          <MainContent>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-            venenatis tristique nibh ac aliquet. Integer finibus cursus
-            pellentesque. Praesent hendrerit mi condimentum faucibus feugiat.
-            Morbi feugiat dui mattis, consectetur nisi ac, molestie felis. Donec
-            tincidunt pulvinar placerat. Phasellus imperdiet, neque id sagittis
-            vulputate, enim ex elementum felis, ut fringilla orci eros id eros.
-            Integer auctor euismod felis et varius. Morbi ac blandit nisi. In
-            efficitur nec mi nec tempus. Nam viverra cursus erat. Maecenas
-            faucibus efficitur orci vitae pellentesque. Integer gravida non quam
-            vel suscipit. Donec elementum erat ut placerat venenatis.{" "}
-          </MainContent>
-          <MainContent>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-            venenatis tristique nibh ac aliquet. Integer finibus cursus
-            pellentesque. Praesent hendrerit mi condimentum faucibus feugiat.
-            Morbi feugiat dui mattis, consectetur nisi ac, molestie felis. Donec
-            tincidunt pulvinar placerat. Phasellus imperdiet, neque id sagittis
-            vulputate, enim ex elementum felis, ut fringilla orci eros id eros.
-            Integer auctor euismod felis et varius. Morbi ac blandit nisi. In
-            efficitur nec mi nec tempus. Nam viverra cursus erat. Maecenas
-            faucibus efficitur orci vitae pellentesque. Integer gravida non quam
-            vel suscipit. Donec elementum erat ut placerat venenatis.{" "}
-          </MainContent>
-        </MainContentContainer>
-      </Container>
-    </Body>
+    <GlobalLayout>
+      <Header smallScreen={smallScreen} currentPage={"home"} />
+      <Body>
+        <Container smallScreen={smallScreen}>
+          <SideBarContainer
+            visible={!smallScreen}
+            smallScreen={smallScreen}
+            toggleSideBar={state.toggleSideBar}
+          >
+            <SideBarElement first={true} smallScreen={smallScreen}>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="welcome"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  const currentSelection = "welcome"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                Welcome to my website!
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="motivation"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  const currentSelection = "motivation"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                to Motivation
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about2"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  const currentSelection = "about2"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                to about 2
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            {/* Delete after here */}
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            <SideBarElement>
+              <StyledScrollLink
+                activeClass="element-active-on-screen"
+                to="about"
+                spy={true}
+                smooth={true}
+                duration={500}
+                offset={-75}
+                containerId="main-content"
+                onClick={() => {
+                  let currentSelection = "about"
+                  setState({ ...state, currentSelection, toggleSideBar: false })
+                }}
+              >
+                About Me
+              </StyledScrollLink>
+            </SideBarElement>
+            {/* Delete before here */}
+          </SideBarContainer>
+          <MainContentContainer id="main-content">
+            <HamburgerButton
+              showSideBar={state.toggleSideBar}
+              toggleSideBar={toggleSideBar}
+              smallScreen={smallScreen}
+            ></HamburgerButton>
+
+            <MainContentElement id="welcome">
+              <PageHeader isActive={"welcome" === state.currentSelection}>
+                Welcome to Ofek's Website.
+              </PageHeader>
+            </MainContentElement>
+            <MainContentElement id="motivation">
+              <Title isActive={"motivation" === state.currentSelection}>
+                Motivation
+              </Title>
+              <Blurb>
+                This project is meant to bring some of my achievements to life,
+                to share my skills and experiences in a way that is
+                <i> more </i>
+                than just data on a page.
+              </Blurb>
+            </MainContentElement>
+            <MainContentElement id="about">
+              <Title isActive={"about" === state.currentSelection}>
+                About Me
+              </Title>
+              <Blurb>
+                I'm a Senior at Princeton University majoring in Mechanical and
+                Aerospace Engineering and minoring in Computer Science and
+                Robotics. I love the intersection between hardware and software.
+                Feel free to check out some of my
+                <StyledLink to="/projects"> favorite projects</StyledLink>!
+              </Blurb>
+            </MainContentElement>
+            {/* Remove after here */}
+
+            <MainContentElement id="motivation2">
+              <Title isActive={"motivation2" === state.currentSelection}>
+                Motivation 2
+              </Title>
+              <Blurb>
+                This project is meant to bring some of my achievements to life,
+                to share my skills and experiences in a way that is
+                <i> more </i>
+                than just data on a page.
+              </Blurb>
+            </MainContentElement>
+            <MainContentElement id="about2">
+              <Title isActive={"about2" === state.currentSelection}>
+                About Me 2
+              </Title>
+              <Blurb>
+                I'm a Senior at Princeton University majoring in Mechanical and
+                Aerospace Engineering and minoring in Computer Science and
+                Robotics. I love the intersection between hardware and software.
+                Feel free to check out some of my
+                <StyledLink to="/projects"> favorite projects</StyledLink>!
+              </Blurb>
+            </MainContentElement>
+            <section id="section1">Test Section Here</section>
+
+            {/* Remove before here */}
+            {/* Arbitrary div with height so scrolling works well */}
+            <MainContentElement>
+              {/* <div
+                style={{ "margin-bottom": "350px", overflow: "hidden" }}
+              ></div> */}
+            </MainContentElement>
+          </MainContentContainer>
+        </Container>
+      </Body>
+    </GlobalLayout>
   )
 }
 
-export default About
+export default HomePage

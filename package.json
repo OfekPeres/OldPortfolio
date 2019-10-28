@@ -14,8 +14,14 @@
   },
   "dependencies": {
     "gatsby": "^2.13.73",
+    "gatsby-plugin-layout": "^1.1.5",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "react-inlinesvg": "^1.1.6",
+    "react-player": "^1.12.0",
+    "react-scroll": "^1.7.14",
+    "react-scroll-to-component": "^1.0.2",
+    "styled-components": "^4.3.2"
   },
   "devDependencies": {
     "prettier": "^1.18.2"

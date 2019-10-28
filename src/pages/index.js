@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react"
+// custom hook for getting window dimensions
 import useWindowDimensions from "../functions/useWindowDimensions"
+
 import Body from "../components/body"
+//  header component that should be the same per every page
 import Header from "../components/header"
+// a style sheet that applies global styles from style.css
 import GlobalLayout from "../components/global_layout"
-import {
-  Events,
-  // animateScroll as scroll,
-  scrollSpy,
-} from "react-scroll"
+// scroll links and highlight links in navbar when near them
+import { Events, scrollSpy } from "react-scroll"
+// custom button to open and close navbar on mobile phones
 import { HamburgerButton } from "../components/buttons"
+
 import {
   Container,
   SideBarContainer,
@@ -19,36 +22,35 @@ import {
   Blurb,
   SideBarElement,
   StyledScrollLink,
+  StyledUrlLink,
 } from "../components/containers"
+// link to other gatsby pages
 import { Link } from "gatsby"
+// import styled components
 import styled from "styled-components"
 
+// styled gatsby Link for inline linking to other pages
 const StyledLink = styled(Link)`
   :hover {
     cursor: pointer;
+    border-bottom: 1px solid darkseagreen;
   }
 
   text-decoration: none;
-  color: black;
+  color: darkseagreen;
 `
-// make a function to hold state for when I am scrolling or not, then add a useEffect
-// hook to update the visible/invisible state of the header
+
 const initialState = {
   prevScrollpos: 0,
-  navBarVisible: true,
   currentSelection: "",
   toggleSideBar: false,
 }
 
-// const titleToID = {"Welcome To My Website" : }
 const HomePage = () => {
   const [state, setState] = useState(initialState)
-  const { width, height } = useWindowDimensions()
+  const { width } = useWindowDimensions()
   // make sure that we know if the screen is big enough to display sidebar
   const smallScreen = width < 560
-
-  // const scrollToTop = () => scroll.scrollToTop()
-  // const scrollToBottom = () => scroll.scrollToBottom()
 
   // this effect is to handle scrolling to different links
   useEffect(() => {
@@ -75,9 +77,14 @@ const HomePage = () => {
       setState({ ...state, toggleSideBar: false })
     }
   }, [smallScreen])
+
   // have an onClick method to pass to button to toggle sidebar
   function toggleSideBar() {
     setState({ ...state, toggleSideBar: !state.toggleSideBar })
+  }
+  // handleClick method for clicking on links in sidebar
+  function handleClick(currentSelection) {
+    setState({ ...state, currentSelection, toggleSideBar: false })
   }
   return (
     <GlobalLayout>
@@ -89,304 +96,42 @@ const HomePage = () => {
             smallScreen={smallScreen}
             toggleSideBar={state.toggleSideBar}
           >
-            <SideBarElement first={true} smallScreen={smallScreen}>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="welcome"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  const currentSelection = "welcome"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                Welcome to my website!
-              </StyledScrollLink>
-            </SideBarElement>
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="motivation"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  const currentSelection = "motivation"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                to Motivation
-              </StyledScrollLink>
-            </SideBarElement>
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="about2"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  const currentSelection = "about2"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                to about 2
-              </StyledScrollLink>
-            </SideBarElement>
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="about"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  let currentSelection = "about"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                About Me
-              </StyledScrollLink>
-            </SideBarElement>
-            {/* Delete after here */}
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="about"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  let currentSelection = "about"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                About Me
-              </StyledScrollLink>
-            </SideBarElement>
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="about"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  let currentSelection = "about"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                About Me
-              </StyledScrollLink>
-            </SideBarElement>
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="about"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  let currentSelection = "about"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                About Me
-              </StyledScrollLink>
-            </SideBarElement>
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="about"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  let currentSelection = "about"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                About Me
-              </StyledScrollLink>
-            </SideBarElement>
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="about"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  let currentSelection = "about"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                About Me
-              </StyledScrollLink>
-            </SideBarElement>
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="about"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  let currentSelection = "about"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                About Me
-              </StyledScrollLink>
-            </SideBarElement>
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="about"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  let currentSelection = "about"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                About Me
-              </StyledScrollLink>
-            </SideBarElement>
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="about"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  let currentSelection = "about"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                About Me
-              </StyledScrollLink>
-            </SideBarElement>
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="about"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  let currentSelection = "about"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                About Me
-              </StyledScrollLink>
-            </SideBarElement>
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="about"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  let currentSelection = "about"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                About Me
-              </StyledScrollLink>
-            </SideBarElement>
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="about"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  let currentSelection = "about"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                About Me
-              </StyledScrollLink>
-            </SideBarElement>
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="about"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  let currentSelection = "about"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                About Me
-              </StyledScrollLink>
-            </SideBarElement>
-            <SideBarElement>
-              <StyledScrollLink
-                activeClass="element-active-on-screen"
-                to="about"
-                spy={true}
-                smooth={true}
-                duration={500}
-                offset={-75}
-                containerId="main-content"
-                onClick={() => {
-                  let currentSelection = "about"
-                  setState({ ...state, currentSelection, toggleSideBar: false })
-                }}
-              >
-                About Me
-              </StyledScrollLink>
-            </SideBarElement>
-            {/* Delete before here */}
+            <SideBarElement
+              first={true}
+              smallScreen={smallScreen}
+              to="welcome"
+              currentSelection="welcome"
+              handleClick={handleClick}
+              text="Welcome to my website!"
+            />
+            <SideBarElement
+              smallScreen={smallScreen}
+              to="motivation"
+              currentSelection="motivation"
+              handleClick={handleClick}
+              text="Motivation"
+            />
+            <SideBarElement
+              smallScreen={smallScreen}
+              to="about"
+              currentSelection="about"
+              handleClick={handleClick}
+              text="About Me"
+            />
+            <SideBarElement
+              smallScreen={smallScreen}
+              to="favorite-books"
+              currentSelection="favorite-books"
+              handleClick={handleClick}
+              text="Favorite Books"
+            />
           </SideBarContainer>
           <MainContentContainer id="main-content">
             <HamburgerButton
               showSideBar={state.toggleSideBar}
               toggleSideBar={toggleSideBar}
               smallScreen={smallScreen}
-            ></HamburgerButton>
+            />
 
             <MainContentElement id="welcome">
               <PageHeader isActive={"welcome" === state.currentSelection}>
@@ -416,39 +161,59 @@ const HomePage = () => {
                 <StyledLink to="/projects"> favorite projects</StyledLink>!
               </Blurb>
             </MainContentElement>
-            {/* Remove after here */}
-
-            <MainContentElement id="motivation2">
-              <Title isActive={"motivation2" === state.currentSelection}>
-                Motivation 2
+            <MainContentElement id="favorite-books">
+              <Title isActive={"favorite-books" === state.currentSelection}>
+                Favorite Books
               </Title>
               <Blurb>
-                This project is meant to bring some of my achievements to life,
-                to share my skills and experiences in a way that is
-                <i> more </i>
-                than just data on a page.
-              </Blurb>
-            </MainContentElement>
-            <MainContentElement id="about2">
-              <Title isActive={"about2" === state.currentSelection}>
-                About Me 2
-              </Title>
-              <Blurb>
-                I'm a Senior at Princeton University majoring in Mechanical and
-                Aerospace Engineering and minoring in Computer Science and
-                Robotics. I love the intersection between hardware and software.
-                Feel free to check out some of my
-                <StyledLink to="/projects"> favorite projects</StyledLink>!
-              </Blurb>
-            </MainContentElement>
-            <section id="section1">Test Section Here</section>
+                Outside of school, I am an avid reader. Science Fiction and
+                Fantasy books lend a fascnitating lens to many of the current
+                engineering problems we are facing today. Some of my favorites
+                include:
+                <ul
+                  style={{
+                    listStyle: "none",
+                    width: "100%",
+                  }}
+                >
+                  <li>
+                    <StyledUrlLink
+                      target="_blank"
+                      href="https://www.amazon.com/Name-Wind-Patrick-Rothfuss/dp/0756404746/ref=pd_sbs_14_1/130-9667251-7768948?_encoding=UTF8&pd_rd_i=0756404746&pd_rd_r=0156cf03-6d14-4c9d-b992-ef864409a952&pd_rd_w=r92y7&pd_rd_wg=tpVB6&pf_rd_p=d66372fe-68a6-48a3-90ec-41d7f64212be&pf_rd_r=WJPRH6311Y6V3YSS5QMD&psc=1&refRID=WJPRH6311Y6V3YSS5QMD"
+                    >
+                      The Name of the Wind, by Patrick Rothfus
+                    </StyledUrlLink>
+                  </li>
 
-            {/* Remove before here */}
-            {/* Arbitrary div with height so scrolling works well */}
+                  <li>
+                    <StyledUrlLink
+                      target="_blank"
+                      href="https://wanderinginn.com/"
+                    >
+                      The Wandering Inn, by pirateaba
+                    </StyledUrlLink>
+                  </li>
+                  <li>
+                    <StyledUrlLink
+                      target="_blank"
+                      href="https://www.amazon.com/Lies-Locke-Lamora-Gentleman-Bastards/dp/055358894X/ref=pd_sbs_14_1/130-9667251-7768948?_encoding=UTF8&pd_rd_i=055358894X&pd_rd_r=e98faceb-98d1-42fc-bc52-555e99a0ee0c&pd_rd_w=CI9wv&pd_rd_wg=nPsyM&pf_rd_p=d66372fe-68a6-48a3-90ec-41d7f64212be&pf_rd_r=NEP1A6T6D9V9DR44J9MA&psc=1&refRID=NEP1A6T6D9V9DR44J9MA"
+                    >
+                      The Lies of Locke Lamora, by Scott Lynch
+                    </StyledUrlLink>
+                  </li>
+                  <li>
+                    <StyledUrlLink
+                      target="_blank"
+                      href="https://www.amazon.com/Way-Kings-Brandon-Sanderson/dp/0765365278"
+                    >
+                      The Way of Kings, by Brandon Sanderson
+                    </StyledUrlLink>
+                  </li>
+                </ul>
+              </Blurb>
+            </MainContentElement>
             <MainContentElement>
-              {/* <div
-                style={{ "margin-bottom": "350px", overflow: "hidden" }}
-              ></div> */}
+              <div style={{ paddingBottom: "100px" }}></div>
             </MainContentElement>
           </MainContentContainer>
         </Container>
